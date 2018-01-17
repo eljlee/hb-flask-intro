@@ -39,7 +39,7 @@ def say_hello():
         <form action="/greet">
           What's your name? <input type="text" name="person">
           <br>
-          Choose a compliment: 
+          Choose a compliment:
           <select name="compliment">
           <option value="terrific">terrific</option>
           <option value="fantastic">fantastic</option>
@@ -47,9 +47,38 @@ def say_hello():
           </select>
           <input type="submit" value="Submit">
         </form>
+        <br>
+        <form action="/diss" method="POST">
+        Or an insult:
+        <select name="insult">
+        <option value="awful">bad choice</option>
+        <option value="bad at Python">sadistic choice</option>
+        <option value="lazy">tame choice</option>
+        <br>
+        <input type="submit" value="Oh no">
+        </form>
       </body>
     </html>
     """
+
+
+@app.route('/diss', methods=["POST"])
+def diss_person():
+    """Insults user >:("""
+
+    insult = request.form.get("insult")
+
+    return """
+    <!doctype html>
+      <html>
+        <head>
+          <title>An Insult</title>
+        </head>
+        <body>
+          Wow... I think you're {insult}!
+        </body>
+      </html>
+      """.format(insult=insult)   
 
 
 @app.route('/greet')
@@ -71,6 +100,7 @@ def greet_person():
       </body>
     </html>
     """.format(player=player, compliment=compliment)
+
 
 
 if __name__ == '__main__':
